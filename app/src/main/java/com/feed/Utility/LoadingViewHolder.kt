@@ -1,9 +1,9 @@
-package com.test.Utility
+package com.feed.Utility
 
 import android.view.View
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
-import com.test.R
+import com.feed.R
 
 
 class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

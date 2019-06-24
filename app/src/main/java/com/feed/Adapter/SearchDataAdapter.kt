@@ -1,4 +1,4 @@
-package com.test.Adapter
+package com.feed.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.test.Model.RootModel
-import com.test.R
-import com.test.Utility.AppConst.Companion.VIEW_TYPE_ITEM
-import com.test.Utility.AppConst.Companion.VIEW_TYPE_LOADING
-import com.test.Utility.LoadingViewHolder
-import com.test.Utility.convertDateInputFormatToGiveDateFormat
+import com.feed.Model.RootModel
+import com.feed.R
+import com.feed.Utility.AppConst.Companion.VIEW_TYPE_ITEM
+import com.feed.Utility.AppConst.Companion.VIEW_TYPE_LOADING
+import com.feed.Utility.LoadingViewHolder
+import com.feed.Utility.convertDateInputFormatToGiveDateFormat
 
 class SearchDataAdapter(
     private val context: Context,

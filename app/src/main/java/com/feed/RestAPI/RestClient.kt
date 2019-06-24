@@ -2,7 +2,7 @@ package com.mvpproject.Util
 
 import android.content.Context
 
-import com.test.BuildConfig
+import com.feed.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

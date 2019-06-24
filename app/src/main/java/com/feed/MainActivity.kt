@@ -1,16 +1,16 @@
-package com.test
+package com.feed
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mvpproject.Util.RestClient
-import com.test.Adapter.SearchDataAdapter
-import com.test.Listener.OnLoadMoreListener
-import com.test.Model.RootModel
-import com.test.Utility.AppConst
-import com.test.Utility.isConnected
-import com.test.Utility.showToast
+import com.feed.Adapter.SearchDataAdapter
+import com.feed.Listener.OnLoadMoreListener
+import com.feed.Model.RootModel
+import com.feed.Utility.AppConst
+import com.feed.Utility.isConnected
+import com.feed.Utility.showToast
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,23 +27,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setUpToolbar()
+        setUpToolbarTitle()
         initView()
         callSearchDataAPI()
     }
 
-    private fun setUpToolbar() {
-
+    private fun setUpToolbarTitle() {
         supportActionBar!!.title = resources.getString(R.string.app_name)
     }
 
     private fun callSearchDataAPI() {
+
         callRootBack = RestClient(this).getApiService().searchData(tag, page)
         callRootBack?.enqueue(object : Callback<RootModel> {
             override fun onResponse(call: Call<RootModel>, response: Response<RootModel>) {
                 if (response.code() == AppConst.SUCCESS_CODE) {
+
                     ndPage = response.body()?.nbPages!!
-                    response.body()?.hits?.let { hitModelList.addAll(it) }
+                    response.body()?.hits?.let {
+                        hitModelList.addAll(it)
+                    }
                     setUpSearchDataAdapter()
                 }
 
@@ -76,12 +79,16 @@ class MainActivity : AppCompatActivity() {
     // Set Up RecyclerView Adapter
     private fun setUpSearchDataAdapter() {
         if (!isLoadMoreData) {
+
             searchDataAdapter = SearchDataAdapter(this, hitModelList, onItemClick = ::onItemClick)
             recyclerView.adapter = searchDataAdapter
             searchDataAdapter?.setLoadMoreListener(object : OnLoadMoreListener {
                 override fun onLoadMore() {
                     page += 1
                     isLoadMoreData = true
+                    callRootBack?.let {
+                        it.cancel()
+                    }
                     callSearchDataAPI()
                 }
 
@@ -112,14 +119,14 @@ class MainActivity : AppCompatActivity() {
                 it.cancel()
             }
             hitModelList.clear()
-            isLoadMoreData = false
+            isLoadMoreData=false
             page = 1
             searchDataAdapter?.let {
                 it.selectedItem.clear()
                 it.setMoreDataAvailable(false)
             }
             textViewNoInternet.visibility = View.GONE
-            setUpToolbar()
+            setUpToolbarTitle()
             callSearchDataAPI()
         }
 
@@ -136,7 +143,7 @@ class MainActivity : AppCompatActivity() {
             supportActionBar!!.title =
                 resources.getString(R.string.app_name).plus(" (").plus(searchDataAdapter?.selectedItem!!.size).plus(")")
         } else {
-            setUpToolbar()
+            setUpToolbarTitle()
         }
 
     }

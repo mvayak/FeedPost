@@ -1,6 +1,6 @@
 package com.mvpproject.Util
 
-import com.test.Model.RootModel
+import com.feed.Model.RootModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

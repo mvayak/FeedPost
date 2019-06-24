@@ -1,8 +1,8 @@
-package com.test.Adapter
+package com.feed.Adapter
 
 import androidx.recyclerview.widget.RecyclerView
 
-import com.test.Listener.OnLoadMoreListener
+import com.feed.Listener.OnLoadMoreListener
 
 abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder> : RecyclerView.Adapter<T>() {
 

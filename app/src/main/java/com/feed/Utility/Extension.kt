@@ -1,4 +1,4 @@
-package com.test.Utility
+package com.feed.Utility
 
 import android.Manifest
 import android.content.Context

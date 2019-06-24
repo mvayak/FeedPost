@@ -1,4 +1,4 @@
-package com.test
+package com.feed
 
 import org.junit.Test
 

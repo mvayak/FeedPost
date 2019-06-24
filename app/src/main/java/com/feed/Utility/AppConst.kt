@@ -1,4 +1,4 @@
-package com.test.Utility
+package com.feed.Utility
 
 class AppConst{
     companion object{
