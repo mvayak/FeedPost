@@ -20,7 +20,6 @@ fun String.convertDateInputFormatToGiveDateFormat(inputDateFormat:String, requir
         e.printStackTrace()
         return ""
     }
-
     return result
 }
 

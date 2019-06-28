@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         callRootBack?.enqueue(object : Callback<RootModel> {
             override fun onResponse(call: Call<RootModel>, response: Response<RootModel>) {
                 if (response.code() == AppConst.SUCCESS_CODE) {
+                    // For Manage pull to refresh
                     if(isRefresh){
                         isRefresh=false
                         hitModelList.clear()
@@ -101,11 +102,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
     }
-
-
-
 
 
     // Set Up RecyclerView Adapter

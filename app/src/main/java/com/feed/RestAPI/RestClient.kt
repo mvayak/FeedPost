@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit
 class RestClient(private val context: Context) {
 
     private var retrofit: Retrofit? = null
-
-
     private fun getRetrofit(): Retrofit {
 
 

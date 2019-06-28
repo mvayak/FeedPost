@@ -1,6 +1,6 @@
 package com.feed.Listener
 
-// For load more logData from API
+// For load more from API
 interface OnLoadMoreListener {
     fun onLoadMore()
 }

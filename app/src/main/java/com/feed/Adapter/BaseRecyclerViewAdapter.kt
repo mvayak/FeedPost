@@ -9,7 +9,6 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder> : RecyclerVi
     var isLoading = false
     var isMoreDataExists = true
     var loadMoreDataListener: OnLoadMoreListener? = null
-
     /*
         notifyDataSetChanged is final method so we can't override it
         call adapter.notifyDataChanged(); after update the list

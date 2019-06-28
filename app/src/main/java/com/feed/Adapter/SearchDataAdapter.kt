@@ -17,8 +17,7 @@ import com.feed.Utility.convertDateInputFormatToGiveDateFormat
 class SearchDataAdapter(
     private val context: Context,
     private val searchList: List<RootModel.HitModel>?,
-    private val onItemClick: (Int) -> Unit = {}
-) :
+    private val onItemClick: (Int) -> Unit = {}) :
     BaseRecyclerViewAdapter<RecyclerView.ViewHolder>() {
      var selectedItem:MutableList<Int> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

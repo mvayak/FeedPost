@@ -12,5 +12,4 @@ interface RestInterface {
     @GET("search_by_date")
     fun searchData(@Query("tags") tags: String, @Query("page") page: Int): Call<RootModel>
 
-
 }
