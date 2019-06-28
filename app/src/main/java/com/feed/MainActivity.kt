@@ -63,13 +63,14 @@ class MainActivity : AppCompatActivity() {
                 if (response.code() == AppConst.SUCCESS_CODE) {
                     // For Manage pull to refresh
                     if (isRefresh) {
-                        isRefresh = false
+
                         hitModelList.clear()
                         searchDataAdapter?.let {
                             it.selectedItem.clear()
                             it.setMoreDataAvailable(false)
                             searchDataAdapter = null
                             setToolbarTitle()
+                            isRefresh = false
                         }
                     }
                     ndPage = response.body()?.nbPages!!
