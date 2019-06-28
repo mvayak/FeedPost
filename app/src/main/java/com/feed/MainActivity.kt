@@ -1,16 +1,17 @@
 package com.feed
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mvpproject.Util.RestClient
 import com.feed.Adapter.SearchDataAdapter
 import com.feed.Listener.OnLoadMoreListener
 import com.feed.Model.RootModel
 import com.feed.Utility.AppConst
 import com.feed.Utility.isConnected
 import com.feed.Utility.showToast
+import com.mvpproject.Util.RestClient
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private var tag = "story"
     private var ndPage = 0
     private var isLoadMoreData = false
-    private var isRefresh=false
+    private var isRefresh = false
     private var callRootBack: Call<RootModel>? = null
     private var hitModelList: MutableList<RootModel.HitModel> = mutableListOf()
     private var searchDataAdapter: SearchDataAdapter? = null
@@ -44,8 +45,8 @@ class MainActivity : AppCompatActivity() {
             callRootBack?.let {
                 it.cancel()
             }
-            isRefresh=true
-            isLoadMoreData=false
+            isRefresh = true
+            isLoadMoreData = false
             page = 1
 
             textViewNoInternet.visibility = View.GONE
@@ -54,21 +55,21 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
     // Calling API
     private fun callSearchDataAPI() {
-
         callRootBack = RestClient(this).getApiService().searchData(tag, page)
         callRootBack?.enqueue(object : Callback<RootModel> {
             override fun onResponse(call: Call<RootModel>, response: Response<RootModel>) {
                 if (response.code() == AppConst.SUCCESS_CODE) {
                     // For Manage pull to refresh
-                    if(isRefresh){
-                        isRefresh=false
+                    if (isRefresh) {
+                        isRefresh = false
                         hitModelList.clear()
                         searchDataAdapter?.let {
                             it.selectedItem.clear()
                             it.setMoreDataAvailable(false)
-                            searchDataAdapter=null
+                            searchDataAdapter = null
                             setToolbarTitle()
                         }
                     }
@@ -86,7 +87,6 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<RootModel>, t: Throwable) {
                 progressBarLoader.visibility = View.GONE
-                isRefresh=false
                 swipeRefreshLayout.isRefreshing = false
                 if (!isConnected()) {
                     if (hitModelList.size > 0) {
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                         textViewNoInternet.visibility = View.GONE
 
                     } else {
-                        recyclerView.visibility=View.GONE
+                        recyclerView.visibility = View.GONE
                         textViewNoInternet.visibility = View.VISIBLE
                     }
 
@@ -112,12 +112,15 @@ class MainActivity : AppCompatActivity() {
             recyclerView.adapter = searchDataAdapter
             searchDataAdapter?.setLoadMoreListener(object : OnLoadMoreListener {
                 override fun onLoadMore() {
-                    page += 1
-                    isLoadMoreData = true
-                    callRootBack?.let {
-                        it.cancel()
+                    if (!isRefresh) {
+                        page += 1
+
+                        isLoadMoreData = true
+                        callRootBack?.let {
+                            it.cancel()
+                        }
+                        callSearchDataAPI()
                     }
-                    callSearchDataAPI()
                 }
 
             })
@@ -129,10 +132,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (hitModelList.size > 0) {
-            recyclerView.visibility=View.VISIBLE
+            recyclerView.visibility = View.VISIBLE
             textViewNoInternet.visibility = View.GONE
         } else {
-            recyclerView.visibility=View.GONE
+            recyclerView.visibility = View.GONE
             textViewNoInternet.visibility = View.VISIBLE
         }
     }
